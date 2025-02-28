@@ -1,4 +1,5 @@
 import React from 'react'
+
 import AsideBar from '../Aside/AsideBar'
 
 const LandingPages = () => {
@@ -6,6 +7,16 @@ const LandingPages = () => {
     <div>
       <AsideBar/>
     </div>
+
+import NavBar from '../Nav/NavBar'
+import { Box } from '@mui/material'
+
+const LandingPages = () => {
+  return (
+    <Box>
+      <NavBar/>
+    </Box>
+
   )
 }
 
