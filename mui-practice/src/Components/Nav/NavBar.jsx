@@ -16,6 +16,7 @@ import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
 import { Tooltip } from "@mui/material";
+import AsideBar from "../Aside/AsideBar";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -62,7 +63,11 @@ function NavBar() {
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  const [showBar, setShowBar] = React.useState(false);
 
+  const handleBar = ()=>{
+    setShowBar(!showBar)
+  }
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -164,11 +169,13 @@ function NavBar() {
             color="inherit"
             aria-label="open drawer"
             sx={{ mr: 2 }}
+            onClick={handleBar}
           >
             <Tooltip title="Menu">
             <MenuIcon />
             </Tooltip>
           </IconButton>
+          {showBar && <AsideBar open ={showBar} close={()=>setShowBar(false)}/>}
           <Typography
             variant="h6"
             noWrap
