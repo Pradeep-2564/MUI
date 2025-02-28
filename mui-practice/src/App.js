@@ -1,5 +1,6 @@
 import LandingPages from "./Components/Pages/LandingPages";
 
+
 function App() {
   return (
     <div>
