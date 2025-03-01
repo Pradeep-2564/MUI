@@ -19,7 +19,8 @@ import HomeIcon from '@mui/icons-material/Home';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid'; 
 import FeedbackIcon from '@mui/icons-material/Feedback'; 
 
-export default function AsideBar({open,onclose}) {
+export default function AsideBar({open,close}) {
+
 
 
   const items1 = ['Account Section', 'Network Banking', ' Kyc Update', 'Apply For Credit Card'];
@@ -78,7 +79,7 @@ export default function AsideBar({open,onclose}) {
 
   return (
     <div>
-      <Drawer open={open} onClose={onclose}>
+      <Drawer open={open} onClose={close}>
         {DrawerList}
       </Drawer>
     </div>

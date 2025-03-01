@@ -15,7 +15,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
-import { Tooltip } from "@mui/material";
+import { Avatar, Tooltip } from "@mui/material";
 import AsideBar from "../Aside/AsideBar";
 
 const Search = styled("div")(({ theme }) => ({
@@ -56,56 +56,38 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
   },
 }));
-
+const settings = ['Profile', 'Logout'];
 function NavBar() {
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
+  const [anchorElUser, setAnchorElUser] = React.useState(null);
+
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const [showBar, setShowBar] = React.useState(false);
 
   const handleBar = ()=>{
     setShowBar(!showBar)
   }
-  const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
 
   const handleMobileMenuClose = () => {
     setMobileMoreAnchorEl(null);
-  };
-
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
   };
 
   const handleMobileMenuOpen = (event) => {
     setMobileMoreAnchorEl(event.currentTarget);
   };
 
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
+
+  const handleCloseUserMenu = () => {
+    setAnchorElUser(null);
+  };
+
   const menuId = "primary-search-account-menu";
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "right",
-      }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>Logout</MenuItem>
-    </Menu>
-  );
 
   const mobileMenuId = "primary-search-account-menu-mobile";
   const renderMobileMenu = (
@@ -144,7 +126,7 @@ function NavBar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
+      <MenuItem>
         <IconButton
           size="large"
           aria-label="account of current user"
@@ -175,7 +157,7 @@ function NavBar() {
             <MenuIcon />
             </Tooltip>
           </IconButton>
-          {showBar && <AsideBar open ={showBar} close={()=>setShowBar(false)}/>}
+          {showBar && <AsideBar open ={showBar} onClose={()=>setShowBar(false)}/>}
           <Typography
             variant="h6"
             noWrap
@@ -223,10 +205,38 @@ function NavBar() {
               aria-label="account of current user"
               aria-controls={menuId}
               aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+              
               color="inherit"
             >
-              <AccountCircle />
+              <Box sx={{ flexGrow: 0 }}>
+            <Tooltip title="Open settings">
+              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                <Avatar alt="Pradeep" src="/Images/bank.png" />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={anchorElUser}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorElUser)}
+              onClose={handleCloseUserMenu}
+            >
+              {settings.map((setting) => (
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography sx={{ textAlign: 'center' }}>{setting}</Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
             </IconButton>
           </Box>
           <Box sx={{ display: { xs: "flex", md: "none" } }}>
@@ -246,7 +256,6 @@ function NavBar() {
         </Toolbar>
       </AppBar>
       {renderMobileMenu}
-      {renderMenu}
     </Box>
   );
 }export default NavBar
